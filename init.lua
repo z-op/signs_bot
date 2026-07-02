@@ -15,13 +15,13 @@
 signs_bot = {}
 
 -- Version for compatibility checks, see readme.md/history
-signs_bot.version = 1.14
+signs_bot.version = 1.15
 
 -- Test for MT 5.4 new string mode
 signs_bot.CLIP = minetest.features.use_texture_alpha_string_modes and "clip" or true
 
-if minetest.global_exists("techage") and techage.version < 1.0 then
-	error("[signs_bot] Signs Bot requires techage version 1.0 or newer!")
+if minetest.global_exists("techage") and techage.version < 1.25 then
+	 error("[signs_bot] Signs Bot requires techage version 1.25 or newer!")
 end
 
 if tubelib2.version < 1.9 then

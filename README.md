@@ -11,12 +11,27 @@ Download: [GitHub](https://github.com/joe7575/signs_bot/archive/master.zip)
 
 
 ### Introduction
-See [manual](https://github.com/joe7575/signs_bot/blob/master/manual_EN.md)
+See manual: [English](https://github.com/joe7575/signs_bot/blob/master/manual_EN.md) | [Deutsch](https://github.com/joe7575/signs_bot/blob/master/manual_DE.md)
 
-The mod has an in-game help to all blocks and signs.
-If 'techage' is installed, the techage ingame manual will be expanded.
-If techage is not installed, it is recommended that you have installed the
-mod doclib.
+The mod provides a programmable robot that is controlled by signs placed in its path.
+Key features:
+
+- **Scriptable signs**: Program the bot with a text-based command language directly
+  on "command" signs – including loops (`repeat`/`end`), functions (`call`/`return`),
+  and conditional jumps (`jump_check_item`, `jump_low_batt`)
+- **Item handling**: Automatically take from and put into chests, furnaces, and other
+  inventory nodes
+- **Block manipulation**: Place and dig blocks in all directions and on multiple levels
+- **Farming**: Harvest and sow 3×3 fields, cut flowers, harvest trees
+- **Sensors & actuators**: Bot, Node, Crop, and Chest sensors trigger actions like
+  starting the bot or swapping its active sign (Bot Control Unit)
+- **Signal logic**: AND gate, Delayer, and Sensor Extender for complex automation
+- **Techage integration**: Electric power, `send_cmnd` to control other nodes
+- **Beduino support**: Remote control via the Beduino microcontroller protocol
+
+The mod has an in-game help for all blocks and signs.
+If 'techage' is installed, the techage in-game manual will be expanded.
+If techage is not installed, it is recommended to have the mod doclib installed.
 
 
 ### License
@@ -60,5 +75,6 @@ optional: farming redo, node_io, doc, techage, minecart, xdecor, compost, doclib
 - 2023-06-27  V1.13  * Add Beduino command support (see bep-006_sb_cmnd.md)
 - 2023-07-28  V1.13  * Introduction/manual restructured, doclib dependency added
 - 2025-02-16  V1.14  * Filling of slots changed. AND gate improved. Consider falling nodes.
-
+- 2026-04-10  V1.15  * Add commands `jump_if_block`, `jump_ifnot_block`, and add single-step debugger
+- 2026-04-12  V1.16  * Add `move_platform` command for TA4 Move Controller II elevator support (requires techage v1.25)
 

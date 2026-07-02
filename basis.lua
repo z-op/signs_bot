@@ -156,8 +156,9 @@ local function formspec(pos, mem)
 	"list[context;main;5,1;4,2;]"..
 	"label[5.3,3;5]label[6.3,3;6]label[7.3,3;7]label[8.3,3;8]"..
 	"button[0.2,1;1.5,1;config;"..S("Config").."]"..
-	"button[0.2,2;1.5,1;"..cmnd.."]"..
-	"label[1,3.6;"..status(mem).."]"..
+	"button[0.2,1.8;1.5,1;"..cmnd.."]"..
+	"button[0.2,2.6;1.5,0.9;debug;"..S("Debug").."]"..
+	"label[0.4,3.5;"..status(mem).."]"..
 	"list[current_player;main;0.5,4.4;8,4;]"..
 	"listring[context;main]"..
 	"listring[current_player;main]"
@@ -176,6 +177,51 @@ local function formspec_cfg()
 	"list[current_player;main;0.5,4.4;8,4;]"..
 	"listring[context;filter]"..
 	"listring[current_player;main]"
+end
+
+local function formspec_debug(pos, mem)
+	-- Build the script text with a "►" marker on the current source line.
+	-- Only a window of lines around the current line is shown so the marker
+	-- stays visible even for long scripts.
+	local WINDOW = 8   -- lines of context above and below current line
+	local script = mem.script or ""
+	local current_line = signs_bot.get_source_line(script, mem.pc or 1)
+	local lines = string.split(script, "\n", true)
+	local total = #lines
+
+	-- Calculate the visible window [win_start, win_end].
+	local win_start = math.max(1, current_line - WINDOW)
+	local win_end   = math.min(total, current_line + WINDOW)
+
+	-- Build the visible slice with line-number prefix and ► marker.
+	local visible = {}
+	if win_start > 1 then
+		visible[#visible + 1] = string.format("... (%d lines above)", win_start - 1)
+	end
+	for i = win_start, win_end do
+		local prefix = (i == current_line) and ("\226\150\186") or " "  -- ► or space
+		visible[#visible + 1] = string.format("%s%3d: %s", prefix, i, lines[i])
+	end
+	if win_end < total then
+		visible[#visible + 1] = string.format("... (%d lines below)", total - win_end)
+	end
+	local marked = table.concat(visible, "\n")
+
+	-- Current command and stack info for the header label.
+	local stack_str = table.concat(mem.Stack or {}, ", ")
+	local pc_info = "PC:" .. (mem.pc or 1) ..
+		"   Stack:[" .. stack_str .. "]"
+
+	return "size[9,7.5]" ..
+	default.gui_bg ..
+	default.gui_bg_img ..
+	default.gui_slots ..
+	"label[0.2,0.1;" .. minetest.formspec_escape(S("Debugger") .. "  " .. pc_info) .. "]" ..
+	"textarea[0.2,0.6;8.6,5.5;script;;" .. minetest.formspec_escape(marked) .. "]" ..
+	"button[0.2,6.3;1.9,0.9;step;"   .. S("Step")      .. "]" ..
+	"button[2.3,6.3;1.9,0.9;resume;" .. S("Run")       .. "]" ..
+	"button[4.4,6.3;1.9,0.9;stop;"   .. S("Stop")      .. "]" ..
+	"button[6.5,6.3;2.3,0.9;debugoff;" .. S("Debug Off") .. "]"
 end
 
 local function get_capa(itemstack)
@@ -221,6 +267,8 @@ local function reset_robot(pos, mem)
 	mem.robot_pos = lib.next_pos(pos, mem.robot_param2, 1)
 	local pos_below = {x=mem.robot_pos.x, y=mem.robot_pos.y-1, z=mem.robot_pos.z}
 	signs_bot.place_robot(mem.robot_pos, pos_below, mem.robot_param2)
+	-- Store box position in robot node metadata so the carrier entity can find it without an area scan.
+	minetest.get_meta(mem.robot_pos):set_string("box_pos", minetest.pos_to_string(pos))
 	mem.error = false
 end
 
@@ -234,7 +282,12 @@ function signs_bot.start_robot(base_pos)
 		mem.running = true
 		mem.charging = false
 		mem.error = false
+		mem.debug_mode = false
 		mem.stored_node = nil
+		-- Clear any leftover move_platform state from a previous run.
+		mem.move_platform_sent = nil
+		mem.move_platform_done = nil
+		mem.carrier_freeze = nil
 		if minetest.global_exists("techage") then
 			mem.capa = mem.capa or 0 -- enable power consumption
 		else
@@ -305,7 +358,19 @@ local function node_timer(pos, elapsed)
 		local res = false
 		--local t = minetest.get_us_time()
 		if mem.running then
-			res = signs_bot.run_next_command(pos, mem)
+			if mem.carrier_freeze then
+				res = true  -- keep timer alive while bot rides a moving platform
+			else
+				res = signs_bot.run_next_command(pos, mem)
+				if mem.debug_mode then
+					-- In debug mode: update the debugger formspec and pause the
+					-- timer so the user can inspect state before the next step.
+					if mem.running then
+						M(pos):set_string("formspec", formspec_debug(pos, mem))
+					end
+					return false
+				end
+			end
 		end
 		--t = minetest.get_us_time() - t
 		--print("node_timer", t)
@@ -330,12 +395,67 @@ local function on_receive_fields(pos, formname, fields, player)
 		signs_bot.start_robot(pos)
 	elseif fields.stop then
 		signs_bot.stop_robot(pos, mem)
+	elseif fields.debug then
+		-- Toggle debug mode (only while the bot is running).
+		if mem.running then
+			mem.debug_mode = not mem.debug_mode
+			if mem.debug_mode then
+				minetest.get_node_timer(pos):stop()
+				meta:set_string("formspec", formspec_debug(pos, mem))
+			else
+				meta:set_string("formspec", formspec(pos, mem))
+				minetest.get_node_timer(pos):start(CYCLE_TIME)
+			end
+		end
+	elseif fields.step then
+		-- Execute exactly one bot command and refresh the debug view.
+		if mem.running and mem.debug_mode then
+			-- Log state BEFORE the step so you can see what is about to run.
+			local script = mem.script or ""
+			local cur_line = signs_bot.get_source_line(script, mem.pc or 1)
+			local lines = string.split(script, "\n", true)
+			local cmd_text = (lines[cur_line] or "?"):match("^%s*(.-)%s*$")
+			local rpos = mem.robot_pos or {x="?", y="?", z="?"}
+			local dir_names = {[0]="S", [1]="W", [2]="N", [3]="E"}
+			local dir = dir_names[mem.robot_param2] or tostring(mem.robot_param2)
+			minetest.log("action", string.format(
+				"[signs_bot DBG] pos=(%s,%s,%s) dir=%s  PC=%s line=%s  cmd='%s'" ..
+				"  freeze=%s  move_platform_sent=%s  move_platform_done=%s",
+				tostring(rpos.x), tostring(rpos.y), tostring(rpos.z), dir,
+				tostring(mem.pc or 1), tostring(cur_line), cmd_text,
+				tostring(mem.carrier_freeze), tostring(mem.move_platform_sent),
+				tostring(mem.move_platform_done)))
+			signs_bot.run_next_command(pos, mem)
+			if mem.running then
+				meta:set_string("formspec", formspec_debug(pos, mem))
+			end
+			-- If the bot stopped (exit/error), stop_robot already updated
+			-- the formspec, so we don't override it here.
+		end
+	elseif fields.resume then
+		-- Leave debug mode and let the bot run at normal speed.
+		if mem.running and mem.debug_mode then
+			mem.debug_mode = false
+			meta:set_string("formspec", formspec(pos, mem))
+			minetest.get_node_timer(pos):start(CYCLE_TIME)
+		end
+	elseif fields.debugoff then
+		-- Alias for resume: leave debug mode.
+		mem.debug_mode = false
+		meta:set_string("formspec", formspec(pos, mem))
+		if mem.running then
+			minetest.get_node_timer(pos):start(CYCLE_TIME)
+		end
 	end
 end
 
 local function on_rightclick(pos)
 	local mem = tubelib2.get_mem(pos)
-	M(pos):set_string("formspec", formspec(pos, mem))
+	if mem.debug_mode then
+		M(pos):set_string("formspec", formspec_debug(pos, mem))
+	else
+		M(pos):set_string("formspec", formspec(pos, mem))
+	end
 end
 
 local function allow_metadata_inventory_put(pos, listname, index, stack, player)

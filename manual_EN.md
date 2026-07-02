@@ -6,7 +6,7 @@ On the web: https://github.com/joe7575/signs_bot/blob/master/manual_EN.md
 
 [signs_bot_bot_inv.png|image]
 
-## Firt Steps
+## First Steps
 
 After you have placed the Signs Bot Box, you can start the bot by means of the
 'On' button in the box menu. If the bot returns to its box right away,
@@ -272,11 +272,7 @@ When the bot is done, the bot will turn and walk back.
 
 ### Sign 'pattern'
 
-Used to make a copy of a 3x3x3 cube. Place the sign in front of the pattern
-to be copied. Use the copy sign to make the copy of this pattern on a different
-location. The bot must first reach the pattern sign, then the copy sign.
-
-Used to make a copy of a 3x3x3 cube. Place the shield in front of the blocks
+Used to make a copy of a 3x3x3 cube. Place the sign in front of the blocks
 to be copied. Use the copy sign to make the copy of these blocks in another
 location. The bot must first process the "pattern" sign, only then can the bot
 be directed to the copy sign.
@@ -434,12 +430,12 @@ Any blocks or signs removed will be added back to the Bot Inventory.
     place_sign_behind <slot>  - put a sign behind the bot
     dig_sign <slot>           - remove the sign
     trash_sign <slot>         - Remove the sign, clear data and add to the item Inventory
-    stop                      - Bot stops until the shield is removed
+    stop                      - Bot stops until the sign is removed
     pickup_items <slot>       - pickup items (in a 3x3 field)
     drop_items <num> <slot>   - drop items
     harvest                   - harvest a 3x3 field (farming)
     cutting                   - cut flowers in a 3x3 field
-    sow_seed <slot>           - see/plant a 3x3 field
+    sow_seed <slot>           - sow/plant a 3x3 field
     plant_sapling <slot>      - plant a sapling in front of the robot
     pattern                   - save the block properties behind the sign (3x3x3 cube) as a template
     copy <size>               - make a 3x3x3 copy of the stored template
@@ -447,11 +443,52 @@ Any blocks or signs removed will be added back to the Bot Inventory.
     add_compost <slot>        - Put 2 leaves into the compost barrel
     take_compost <slot>       - Take a compost item from the barrel
     print <text>              - Output chat message for debug purposes
+    debug_mode                - Switch bot into single-step debugger mode (write on a sign placed before the problem spot)
     take_water <slot>         - Take water with empty bucket
     fill_cauldron <slot>      - Fill the xdecor cauldron for a soup
     take_soup <slot>          - Take boiling soup into empty bowl from cauldron
     flame_on                  - Make fire
     flame_off                 - Put out the fire
+
+[signs_bot_bot_inv.png|image]
+
+### Parameter Notes
+
+**`<lvl>` parameter** (used with `place_front/left/right` and `dig_front/left/right`):
+
+`<lvl>` sets the **vertical offset** of the target block, which is always located
+in the direction indicated by the command (front/left/right of the bot):
+
+- `-1` = one level *lower* than the bot (e.g. the floor directly in front)
+- `0` = same height as the bot (e.g. the wall directly in front)
+- `+1` = one level *higher* than the bot (e.g. above head height in front)
+
+**`cond_move`**: The bot moves forward step by step until it either hits an obstacle
+(two or more blocks up/down) or reaches a sign. Unlike `move <steps>`, the number
+of steps is not fixed in advance.
+
+**`move_up`**: Can be used at most 2 times in a row, because the bot occupies up to
+3 blocks in height while climbing (foot, body, head).
+
+**`copy <size>`**: `<size>` must be set to `3`. It copies the 3x3x3 cube that was
+previously saved with the `pattern` command.
+
+**`rotate_item <lvl> <steps>`**: Rotates the block in front of the bot by `<steps>`
+times 90°. Valid values for `<steps>` are 1, 2, or 3. `<lvl>` uses the same
+-1/0/+1 offset as the place/dig commands.
+
+**`set_param2 <lvl> <param2>`**: Sets the raw `param2` value of the block in front
+of the bot. Useful for nodes that use `param2` for orientation or state (e.g.
+facedir nodes). `<lvl>` uses the same -1/0/+1 offset.
+
+**`jump_check_item <num> <slot> <label>`**: Checks the chest-like node that is
+*directly in front of the bot* (not the bot's own inventory). If it contains fewer
+than `<num>` items of the type configured in `<slot>`, the bot jumps to `<label>`.
+Use slot 0 to check for any item.
+
+**Slot preconfiguration**: Right-click a slot in the bot box inventory while the bot
+is stopped, then place the desired item type into the slot. The slot will remember
+that item type and the bot will only use or fill that slot with that specific item.
 
 [signs_bot_bot_inv.png|image]
 
@@ -468,6 +505,47 @@ Any blocks or signs removed will be added back to the Bot Inventory.
                                         For commands with two or more words, 
                                         use the '*' character instead of spaces, e.g.: 
                                         send_cmnd 3465 pull*default:dirt*2 
+    move_platform <ctrl_num> <x,y,z>  - Move a TA4 Move Controller II platform to the
+                                        given absolute position and ride on top of it.
+                                        The bot must be standing on a platform node.
+                                        The position must be given as x,y,z without spaces.
+                                        Requires techage v1.25 or newer.
+                                        Example: move_platform 84 751,14,-308
+
+[signs_bot_bot_inv.png|image]
+
+### Elevator example using TA4 Move Controller II
+
+This example shows how a bot can use a TA4 Move Controller II as an elevator.
+At each level there is a "command" sign that the bot reads when it arrives.
+The bot starts on the platform at the lower position.
+
+**Lower "command" sign** (placed where the bot stands at the bottom, read when the bot starts):
+
+    -- Move the platform (and bot) up to the upper position
+    move_platform 84 751,14,-308
+
+**Upper "command" sign** (placed where the bot arrives at the top,
+read after the platform has moved up):
+
+    -- Do some work at the upper level, then turn around
+    -- and walk back onto the platform
+    turn_around
+    move 2
+    -- Move the platform (and bot) back down to the lower position
+    move_platform 84 751,8,-308
+
+The bot then walks back to its box automatically.
+
+Note: if `move_platform` is not the last command (e.g. when jump labels follow),
+add `cond_move` after it so the bot walks to the next sign instead of falling
+through to later code:
+
+    move_platform 84 751,14,-308
+    cond_move
+
+    end:
+    turn_around
 
 [signs_bot_bot_inv.png|image]
 
@@ -502,6 +580,14 @@ Any blocks or signs removed will be added back to the Bot Inventory.
     -- specify the item, or 0 for any item.
     jump_check_item <num> <slot> <label>
 
+    -- Jump to <label> if the block in front of the bot at <lvl> IS <nodename>.
+    -- <lvl> is one of: -1   0   +1
+    jump_if_block <lvl> <nodename> <label>
+
+    -- Jump to <label> if the block in front of the bot at <lvl> is NOT <nodename>.
+    -- <lvl> is one of: -1   0   +1
+    jump_ifnot_block <lvl> <nodename> <label>
+
     -- See "Techage specific commands"
     jump_low_batt <percent> <label>
 
@@ -510,10 +596,18 @@ Any blocks or signs removed will be added back to the Bot Inventory.
 
 ### Flow control Examples
 
-#### Example with a function at the beginning:
+#### Example with jump_if_block / jump_ifnot_block:
 
-    -- jump to the label 'main'
-    jump main
+    -- Walk forward, dig dirt blocks, ignore everything else.
+    -- The loop ends naturally when the bot reaches a sign or obstacle.
+    loop:
+      jump_ifnot_block 0 default:dirt skip
+      dig_front 1 0
+    skip:
+      move 1
+      jump loop
+
+#### Example with a function at the beginning:
     
     -- starting point of the function with the name 'foo'
     foo:
@@ -557,3 +651,33 @@ Any blocks or signs removed will be added back to the Bot Inventory.
       cmnd ...
     -- end of 'foo'. Jump back
     return
+
+## Debugging
+
+Two commands are available to help debug bot scripts:
+
+**`print <text>`**  
+Sends a chat message to the box owner during script execution.  
+Use `*` instead of spaces in the text (e.g. `print Hello*world`).  
+Useful to trace which branch of a conditional was taken.
+
+**`debug_mode`**  
+Switches the bot into the single-step debugger.  
+The bot pauses immediately after this command and the box formspec
+changes to the debugger view, which shows:
+
+- The full script with a `►` marker on the **next** line to be executed
+- The current program counter (PC) and the call/repeat stack
+- Four buttons: **Step** (execute one command), **Run** (continue at normal speed), **Stop** (turn off), **Debug Off** (close debugger, keep running)
+
+The typical workflow is to write `debug_mode` on a sign and place it
+just before the section you want to inspect. When the bot reads the sign,
+it activates the debugger automatically – no need to open the box formspec first.
+
+    -- normal commands ...
+    move 3
+    turn_left
+    -- HERE: activate debugger for the lines that follow
+    debug_mode
+    dig_front 1 0
+    place_front 2 0

@@ -1,7 +1,7 @@
 return {
   titles = {
     "1,Signs Bot",
-    "2,Firt Steps",
+    "2,First Steps",
     "2,Signs",
     "2,Sensors and Actuators",
     "2,Sensor Connection Tool",
@@ -35,12 +35,16 @@ return {
     "3,Sign 'take water' (xdecor)",
     "3,Sign 'cook soup' (xdecor)",
     "2,Bot Commands",
+    "3,Parameter Notes",
     "3,Techage specific commands",
+    "3,Elevator example using TA4 Move Controller II",
     "3,Flow control commands",
     "3,Further jump commands",
     "3,Flow control Examples",
+    "4,Example with jump_if_block / jump_ifnot_block:",
     "4,Example with a function at the beginning:",
     "4,Example with a function at the end:",
+    "2,Debugging",
   },
   texts = {
     "A robot controlled by signs.\n"..
@@ -273,11 +277,7 @@ return {
     "\n"..
     "\n"..
     "\n",
-    "Used to make a copy of a 3x3x3 cube. Place the sign in front of the pattern\n"..
-    "to be copied. Use the copy sign to make the copy of this pattern on a different\n"..
-    "location. The bot must first reach the pattern sign\\, then the copy sign.\n"..
-    "\n"..
-    "Used to make a copy of a 3x3x3 cube. Place the shield in front of the blocks\n"..
+    "Used to make a copy of a 3x3x3 cube. Place the sign in front of the blocks\n"..
     "to be copied. Use the copy sign to make the copy of these blocks in another\n"..
     "location. The bot must first process the \"pattern\" sign\\, only then can the bot\n"..
     "be directed to the copy sign.\n"..
@@ -406,12 +406,12 @@ return {
     "    place_sign_behind <slot>  - put a sign behind the bot\n"..
     "    dig_sign <slot>           - remove the sign\n"..
     "    trash_sign <slot>         - Remove the sign\\, clear data and add to the item Inventory\n"..
-    "    stop                      - Bot stops until the shield is removed\n"..
+    "    stop                      - Bot stops until the sign is removed\n"..
     "    pickup_items <slot>       - pickup items (in a 3x3 field)\n"..
     "    drop_items <num> <slot>   - drop items\n"..
     "    harvest                   - harvest a 3x3 field (farming)\n"..
     "    cutting                   - cut flowers in a 3x3 field\n"..
-    "    sow_seed <slot>           - see/plant a 3x3 field\n"..
+    "    sow_seed <slot>           - sow/plant a 3x3 field\n"..
     "    plant_sapling <slot>      - plant a sapling in front of the robot\n"..
     "    pattern                   - save the block properties behind the sign (3x3x3 cube) as a template\n"..
     "    copy <size>               - make a 3x3x3 copy of the stored template\n"..
@@ -419,11 +419,50 @@ return {
     "    add_compost <slot>        - Put 2 leaves into the compost barrel\n"..
     "    take_compost <slot>       - Take a compost item from the barrel\n"..
     "    print <text>              - Output chat message for debug purposes\n"..
+    "    debug_mode                - Switch bot into single-step debugger mode (write on a sign placed before the problem spot)\n"..
     "    take_water <slot>         - Take water with empty bucket\n"..
     "    fill_cauldron <slot>      - Fill the xdecor cauldron for a soup\n"..
     "    take_soup <slot>          - Take boiling soup into empty bowl from cauldron\n"..
     "    flame_on                  - Make fire\n"..
     "    flame_off                 - Put out the fire\n"..
+    "\n"..
+    "\n"..
+    "\n",
+    "*'<lvl>' parameter* (used with 'place_front/left/right' and 'dig_front/left/right'):\n"..
+    "\n"..
+    "'<lvl>' sets the *vertical offset* of the target block\\, which is always located\n"..
+    "in the direction indicated by the command (front/left/right of the bot):\n"..
+    "\n"..
+    "  - '-1' = one level *lower* than the bot (e.g. the floor directly in front)\n"..
+    "  - '0' = same height as the bot (e.g. the wall directly in front)\n"..
+    "  - '+1' = one level *higher* than the bot (e.g. above head height in front)\n"..
+    "\n"..
+    "*'cond_move'*: The bot moves forward step by step until it either hits an obstacle\n"..
+    "(two or more blocks up/down) or reaches a sign. Unlike 'move <steps>'\\, the number\n"..
+    "of steps is not fixed in advance.\n"..
+    "\n"..
+    "*'move_up'*: Can be used at most 2 times in a row\\, because the bot occupies up to\n"..
+    "3 blocks in height while climbing (foot\\, body\\, head).\n"..
+    "\n"..
+    "*'copy <size>'*: '<size>' must be set to '3'. It copies the 3x3x3 cube that was\n"..
+    "previously saved with the 'pattern' command.\n"..
+    "\n"..
+    "*'rotate_item <lvl> <steps>'*: Rotates the block in front of the bot by '<steps>'\n"..
+    "times 90°. Valid values for '<steps>' are 1\\, 2\\, or 3. '<lvl>' uses the same\n"..
+    "-1/0/+1 offset as the place/dig commands.\n"..
+    "\n"..
+    "*'set_param2 <lvl> <param2>'*: Sets the raw 'param2' value of the block in front\n"..
+    "of the bot. Useful for nodes that use 'param2' for orientation or state (e.g.\n"..
+    "facedir nodes). '<lvl>' uses the same -1/0/+1 offset.\n"..
+    "\n"..
+    "*'jump_check_item <num> <slot> <label>'*: Checks the chest-like node that is\n"..
+    "*directly in front of the bot* (not the bot's own inventory). If it contains fewer\n"..
+    "than '<num>' items of the type configured in '<slot>'\\, the bot jumps to '<label>'.\n"..
+    "Use slot 0 to check for any item.\n"..
+    "\n"..
+    "*Slot preconfiguration*: Right-click a slot in the bot box inventory while the bot\n"..
+    "is stopped\\, then place the desired item type into the slot. The slot will remember\n"..
+    "that item type and the bot will only use or fill that slot with that specific item.\n"..
     "\n"..
     "\n"..
     "\n",
@@ -437,7 +476,46 @@ return {
     "                                        Receiver is addressed by the techage node number. \n"..
     "                                        For commands with two or more words\\, \n"..
     "                                        use the '*' character instead of spaces\\, e.g.: \n"..
-    "                                        send_cmnd 3465 pull*default:dirt*2\n"..
+    "                                        send_cmnd 3465 pull*default:dirt*2 \n"..
+    "    move_platform <ctrl_num> <x\\,y\\,z>  - Move a TA4 Move Controller II platform to the\n"..
+    "                                        given absolute position and ride on top of it.\n"..
+    "                                        The bot must be standing on a platform node.\n"..
+    "                                        The position must be given as x\\,y\\,z without spaces.\n"..
+    "                                        Requires techage v1.25 or newer.\n"..
+    "                                        Example: move_platform 84 751\\,14\\,-308\n"..
+    "\n"..
+    "\n"..
+    "\n",
+    "This example shows how a bot can use a TA4 Move Controller II as an elevator.\n"..
+    "At each level there is a \"command\" sign that the bot reads when it arrives.\n"..
+    "The bot starts on the platform at the lower position.\n"..
+    "\n"..
+    "*Lower \"command\" sign* (placed where the bot stands at the bottom\\, read when the bot starts):\n"..
+    "\n"..
+    "    -- Move the platform (and bot) up to the upper position\n"..
+    "    move_platform 84 751\\,14\\,-308\n"..
+    "\n"..
+    "*Upper \"command\" sign* (placed where the bot arrives at the top\\,\n"..
+    "read after the platform has moved up):\n"..
+    "\n"..
+    "    -- Do some work at the upper level\\, then turn around\n"..
+    "    -- and walk back onto the platform\n"..
+    "    turn_around\n"..
+    "    move 2\n"..
+    "    -- Move the platform (and bot) back down to the lower position\n"..
+    "    move_platform 84 751\\,8\\,-308\n"..
+    "\n"..
+    "The bot then walks back to its box automatically.\n"..
+    "\n"..
+    "Note: if 'move_platform' is not the last command (e.g. when jump labels follow)\\,\n"..
+    "add 'cond_move' after it so the bot walks to the next sign instead of falling\n"..
+    "through to later code:\n"..
+    "\n"..
+    "    move_platform 84 751\\,14\\,-308\n"..
+    "    cond_move\n"..
+    "    \n"..
+    "    end:\n"..
+    "    turn_around\n"..
     "\n"..
     "\n"..
     "\n",
@@ -467,15 +545,29 @@ return {
     "    -- specify the item\\, or 0 for any item.\n"..
     "    jump_check_item <num> <slot> <label>\n"..
     "    \n"..
+    "    -- Jump to <label> if the block in front of the bot at <lvl> IS <nodename>.\n"..
+    "    -- <lvl> is one of: -1   0   +1\n"..
+    "    jump_if_block <lvl> <nodename> <label>\n"..
+    "    \n"..
+    "    -- Jump to <label> if the block in front of the bot at <lvl> is NOT <nodename>.\n"..
+    "    -- <lvl> is one of: -1   0   +1\n"..
+    "    jump_ifnot_block <lvl> <nodename> <label>\n"..
+    "    \n"..
     "    -- See \"Techage specific commands\"\n"..
     "    jump_low_batt <percent> <label>\n"..
     "\n"..
     "\n"..
     "\n",
     "",
-    "    -- jump to the label 'main'\n"..
-    "    jump main\n"..
-    "    \n"..
+    "    -- Walk forward\\, dig dirt blocks\\, ignore everything else.\n"..
+    "    -- The loop ends naturally when the bot reaches a sign or obstacle.\n"..
+    "    loop:\n"..
+    "      jump_ifnot_block 0 default:dirt skip\n"..
+    "      dig_front 1 0\n"..
+    "    skip:\n"..
+    "      move 1\n"..
+    "      jump loop\n"..
+    "\n",
     "    -- starting point of the function with the name 'foo'\n"..
     "    foo:\n"..
     "      cmnd ...\n"..
@@ -515,6 +607,34 @@ return {
     "      cmnd ...\n"..
     "    -- end of 'foo'. Jump back\n"..
     "    return\n"..
+    "\n",
+    "Two commands are available to help debug bot scripts:\n"..
+    "\n"..
+    "*'print <text>'*\n"..
+    "Sends a chat message to the box owner during script execution.\n"..
+    "Use '*' instead of spaces in the text (e.g. 'print Hello*world').\n"..
+    "Useful to trace which branch of a conditional was taken.\n"..
+    "\n"..
+    "*'debug_mode'*\n"..
+    "Switches the bot into the single-step debugger.\n"..
+    "The bot pauses immediately after this command and the box formspec\n"..
+    "changes to the debugger view\\, which shows:\n"..
+    "\n"..
+    "  - The full script with a '►' marker on the *next* line to be executed\n"..
+    "  - The current program counter (PC) and the call/repeat stack\n"..
+    "  - Four buttons: *Step* (execute one command)\\, *Run* (continue at normal speed)\\, *Stop* (turn off)\\, *Debug Off* (close debugger\\, keep running)\n"..
+    "\n"..
+    "The typical workflow is to write 'debug_mode' on a sign and place it\n"..
+    "just before the section you want to inspect. When the bot reads the sign\\,\n"..
+    "it activates the debugger automatically – no need to open the box formspec first.\n"..
+    "\n"..
+    "    -- normal commands ...\n"..
+    "    move 3\n"..
+    "    turn_left\n"..
+    "    -- HERE: activate debugger for the lines that follow\n"..
+    "    debug_mode\n"..
+    "    dig_front 1 0\n"..
+    "    place_front 2 0\n"..
     "\n",
   },
   images = {
@@ -556,11 +676,19 @@ return {
     "signs_bot_bot_inv.png",
     "signs_bot_bot_inv.png",
     "signs_bot_bot_inv.png",
+    "signs_bot_bot_inv.png",
+    "signs_bot_bot_inv.png",
+    "",
+    "",
     "",
     "",
     "",
   },
   plans = {
+    "",
+    "",
+    "",
+    "",
     "",
     "",
     "",

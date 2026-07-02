@@ -32,6 +32,8 @@ signs_bot.TURN_OFF = ci.TURN_OFF
 
 -- API functions
 signs_bot.check_label = ci.check_label
+signs_bot.get_source_line = ci.get_source_line
+signs_bot.get_current_cmnd = ci.get_current_cmnd
 
 local tCommands = {}
 local SortedKeys = {}
@@ -234,8 +236,14 @@ signs_bot.register_botcommand("jump", {
 })
 
 local function move(mem, any_sensor)
+	local old_pos = mem.robot_pos
 	local new_pos = signs_bot.move_robot(mem)
 	if new_pos then  -- not blocked?
+		-- Propagate box_pos metadata so techage move_platform works after bot moves around
+		local bp = minetest.get_meta(old_pos):get_string("box_pos")
+		if bp ~= "" then
+			minetest.get_meta(new_pos):set_string("box_pos", bp)
+		end
 		mem.robot_pos = new_pos
 		if any_sensor then
 			activate_sensor(mem.robot_pos, (mem.robot_param2 + 1) % 4)
@@ -307,6 +315,20 @@ instead of spaces, like "Hello*world"]]),
 		if owner ~= "" and text ~= "" then
 			minetest.chat_send_player(owner, "Bot: " .. text)
 		end
+		return signs_bot.DONE
+	end,
+})
+
+signs_bot.register_botcommand("debug_mode", {
+	mod = "debug",
+	params = "",
+	num_param = 0,
+	description = S([[Switch the bot into single-step debugger mode.
+The debugger view opens on the bot box and the bot
+pauses after every command until 'Run' or 'Debug Off'
+is pressed. Useful on signs placed before a problem spot.]]),
+	cmnd = function(base_pos, mem)
+		mem.debug_mode = true
 		return signs_bot.DONE
 	end,
 })
