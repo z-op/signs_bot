@@ -24,6 +24,12 @@ To stop and remove the bot, press the 'Off' button.=
 The box inventory simulates the inventory of the bot.=
 You will not be able to access the inventory, if the bot is running.=
 The bot can carry up to 8 stacks and 6 signs with it.=
+Debug=
+Debugger=
+Step=
+Run=
+Stop=
+Debug Off=
 
 ### basis.lua ###
 ### techage.lua ###

@@ -1,0 +1,482 @@
+# textdomain: signs_bot
+
+
+
+### basis.lua ###
+
+running=работает
+stopped=остановлен
+Off=Выкл.
+On=Вкл.
+Signs=Знаки
+Other items=Прочие предметы
+Config=Конфиг.
+Preassign slots items=Предустановки
+Back=Назад
+Robot Box=Ящик робота
+Signs Bot Box=Ящик робота
+The Box is the housing of the bot.=Ящик служит базой для робота.
+Place the box and start the bot by means of the 'On' button.=Установите ящик и запустите робота с помощью кнопки "Вкл.".
+If the mod techage is installed, the bot needs electrical power.=Если установлен мод Techage, роботу требуется электропитание.
+The bot leaves the box on the right side.=Робот покидает ящик с правой стороны.
+It will not start, if this position is blocked.=Он не запустится, если это место заблокировано.
+To stop and remove the bot, press the 'Off' button.=Чтобы остановить и убрать робота, нажмите кнопку "Выкл.".
+The box inventory simulates the inventory of the bot.=Инвентарь ящика имитирует инвентарь робота.
+You will not be able to access the inventory, if the bot is running.=У вас не будет доступа к инвентарю, пока робот работает.
+The bot can carry up to 8 stacks and 6 signs with it.=Робот может переносить до 8 стаков блоков и 6 знаков.
+Debug=Отладка
+Debugger=Отладчик
+Step=Шаг
+Run=Выполнить
+Stop=Стоп
+Debug Off=Выкл. отладчик
+
+### basis.lua ###
+### techage.lua ###
+
+charging=зарядка
+
+### bot_flap.lua ###
+
+Exit=Выход
+Bot Flap=Отсек робота
+The flap is a simple block used as door for the bot.=Отсек — это простой блок, используемый роботом в качестве двери.
+Place the flap in any wall, and the bot will automatically open=Установите отсек в любую стену, и робот автоматически откроет
+and close the flap as it passes through it.=и закроет его, проходя через него.
+
+### bot_sensor.lua ###
+
+Bot Sensor: Connected with=Датчик робота: Соединён с
+Bot Sensor=Датчик робота
+Bot Sensor: Not connected=Датчик робота: Не соединён
+The Bot Sensor detects any bot and sends a signal, if a bot is nearby.=Датчик робота обнаруживает любого робота и посылает сигнал, если робот рядом.
+The sensor direction does not care.=Направление датчика не имеет значения.
+
+### cart_sensor.lua ###
+
+Cart Sensor: Connected with=Датчик вагонетки: Соединён с
+Cart Sensor=Датчик вагонетки
+Cart Sensor: Not connected=Датчик вагонетки: Не соединён
+The Cart Sensor detects and sends a signal, if a cart (Minecart) is nearby.=Датчик вагонетки посылает сигнал, если поблизости находится вагонетка.
+The sensor has an active side (red) that must point to the rail/cart.=У датчика есть активная сторона (красная), которая должна быть направлена на рельсы/вагонетку.
+
+### cart_sensor.lua ###
+### bot_sensor.lua ###
+
+the sensor range is one node/meter.=Радиус действия датчика — один блок/метр.
+
+### changer.lua ###
+
+Signs:=Знаки:
+Bot Control Unit=Блок управления роботом
+The Bot Control Unit is used to lead the bot by means of signs.=Блок управления роботом служит для управления роботом с помощью знаков.
+The unit can be loaded with up to 4 different signs and can be programmed by means of sensors.=Блок можно загрузить до 4 различными знаками и запрограммировать с помощью датчиков.
+To load the unit, place a sign on the red side of the unit and click on the unit.=Чтобы загрузить блок, поместите знак на красную сторону блока и кликните по нему.
+The sign disappears / is moved to the inventory of the unit.=Знак исчезнет / будет перемещён в инвентарь блока.
+This can be repeated 3 times.=Это можно повторить до 3 раз.
+Use the connection tool to connect up to 4 sensors with the Bot Control Unit.=Используйте инструмент соединения, чтобы подключить до 4 датчиков к блоку управления роботом.
+
+### chest.lua ###
+
+Bot Chest: Sends signal to=Ящик робота: Посылает сигнал
+Signs Bot Chest=Ящик робота
+Bot Chest: Not connected=Ящик робота: не соединён
+The Signs Bot Chest is a special chest with sensor function.=Ящик робота — это особый ящик с функцией датчика.
+It sends a signal depending on the chest state.=Он посылает сигнал в зависимости от состояния ящика.
+Possible states are 'empty', 'not empty', 'almost full'=Возможные состояния: "пустой", "не пустой", "почти полный"
+A typical use case is to turn off the bot, when the chest is almost full or empty.=Типичный вариант использования — остановить робота, когда ящик почти полон или пуст.
+
+### cmd_farming.lua ###
+
+Sow farming seeds@nin front of the robot=Посеять семена@nперед роботом
+Harvest farming products@nin front of the robot@non a 3x3 field.=Собрать урожай@nна поле 3x3@nперед роботом.
+Plant a sapling@nin front of the robot=Посадить саженец@nперед роботом
+Sign "farming"=Знак "Фермерство"
+Sign 'farming'=Знак 'Фермерство'
+Used to harvest and seed a 3x3 field.=Используется для сбора урожая и посева на поле 3x3.
+The seed to be placed has to be in the first inventory slot of the bot.=Семена для посадки должны находиться в первом слоте инвентаря робота.
+
+### cmd_farming.lua ###
+### cmd_flowers.lua ###
+
+Place the sign in front of the field.=Поместите знак перед полем.
+When finished, the bot turns.=По завершении робот разворачивается.
+
+### cmd_flowers.lua ###
+
+Cutting flowers, papyrus,@nleaves and tree blocks@nin front of the robot@non a 3x3 field.=Срезать цветы, папирус,@nлистья и блоки деревьев@nна площади 3x3@nперед роботом.
+Sign "flowers"=Знак "Цветы"
+Sign 'flowers'=Знак 'Цветы'
+Used to cut flowers on a 3x3 field.=Используется для срезания цветов на площади 3x3.
+
+### cmd_item.lua ###
+
+Take <num> items from a chest like node@nand put it into the item inventory.@n<slot> is the bot inventory slot@n(1..8) or 0 for any one=Взять <num> предметов из@nящика или подобного блока@nи поместить в свой инвентарь@nв слот <slot>. Слот = (1..8)@nили 0 для любого слота
+Check if there are <num>@nitems in the chest like node.@nIf not, jump to <label>@n<slot> is the bot inventory slot@n(1..8) to specify the item, or 0 for any item=Проверить, есть ли <num> предметов@nв ящике или подобном блоке.@nЕсли нет, перейти к <label>@n<slot> — слот инвентаря робота@n(1..8) для указания предмета, или 0 для любого предмета
+Add <num> items to a chest like node@ntaken from the item inventory.@n<slot> is the bot inventory slot (1..8) or 0 for any one=Положить <num> предметов из@nсобственного инвентаря в другой ящик.@n<slot> — слот в@nсобственном инвентаре (1-8).@nили 0 для любого слота
+Add <num> fuel to a furnace like node@ntaken from the item inventory.@n<slot> is the bot inventory slot (1..8) or 0 for any one=Положить <num> топлива из@nсобственного инвентаря в другой блок.@n<slot> — слот в@nсобственном инвентаре (1-8).@nили 0 для любого слота
+deprecated, use bot inventory configuration instead=устарело, используйте вместо этого настройку инвентаря робота
+Pick up all objects@nin a 3x3 field.@n<slot> is the bot inventory slot (1..8) or 0 for any one=Подобрать все предметы на@nплощади 3x3 блока@nи поместить их в собственный@nинвентарь в слот <slot> (1-8)@nили 0 для любого слота
+Drop items in front of the bot.@n<slot> is the bot inventory slot (1..8) or 0 for any one=Выбросить предмет из собственного@nинвентаря перед роботом.@n<slot> — слот в@nсобственном инвентаре (1-8).@nили 0 для любого слота
+Punch a rail cart to start it=Ударить вагонетку, чтобы запустить её
+
+### cmd_move.lua ###
+
+Move the robot one step back=Двинуть робота@nна один шаг назад
+Turn the robot to the left=Повернуть робота@nналево
+Turn the robot to the right=Повернуть робота@nнаправо
+Turn the robot around=Развернуть робота@n(на 180 градусов)
+Move the robot upwards=Подвинуть робота@nвверх
+Move the robot down=Подвинуть робота@nвниз
+Fall into a hole/chasm (up to 10 blocks)=Упасть в яму/пропасть (до 10 блоков)
+Stop the robot for <sec> seconds@n(1..9999)=Остановить робота@nна <sec> секунд (1..9999)
+Stop the robot.=Остановить робота.
+Turn the robot off@nand put it back in the box.=Выключить робота и@nтем самым вернуть его@nв свой ящик.
+
+### cmd_pattern.lua ###
+
+Store pattern to be cloned.=Сохранить шаблон@nдля копирования.
+Copy the nodes from@nthe stored pattern position@n<size> is: 3x1, 3x2, 3x3,@n5x1, 5x2, 5x3 (wide x deep)@n<lvl> pattern level offset (0..4)=Скопировать блоки с@nпозиции "шаблона".@n<size> может быть: 3x1, 3x2, 3x3,@n5x1, 5x2, 5x3 (ширина x глубина)@n<lvl> уровень шаблона (0..4)
+Sign "pattern"=Знак "Шаблон"
+Sign "copy 3x3x3"=Знак "копировать 3x3x3"
+Sign 'pattern'=Знак 'Шаблон'
+Used to make a copy of a 3x3x3 cube.=Используется для создания копии куба 3x3x3.
+Place the sign in front of the pattern to be copied.=Поместите знак перед копируемым шаблоном.
+Use the copy sign to make the copy of this pattern on a different location.=Используйте знак копирования, чтобы сделать копию этого шаблона в другом месте.
+The bot must first reach the pattern sign, then the copy sign.=Робот должен сначала достичь знака шаблона, затем знака копирования.
+Sign 'copy3x3x3'=Знак 'копировать 3x3x3'
+Place the sign in front of the location, where the copy should be made.=Поместите знак перед местом, где должна быть создана копия.
+Use the pattern sign to mark the pattern.=Используйте знак шаблона, чтобы отметить шаблон.
+
+### cmd_place.lua ###
+
+Place a block in front of the robot@n<slot> is the inventory slot (1..8)@n<lvl> is one of: -1   0   +1=Установить блок перед роботом.@n<slot> — слот в@nсобственном инвентаре (1-8).@nДопустимые значения <lvl>: -1   0   +1
+Place a block on the left side@n<slot> is the inventory slot (1..8)@n<lvl> is one of: -1   0   +1=Установить блок слева спереди.@n<slot> — слот в@nсобственном инвентаре (1-8).@nДопустимые значения <lvl>: -1   0   +1
+Place a block on the right side@n<slot> is the inventory slot (1..8)@n<lvl> is one of: -1   0   +1=Установить блок справа спереди.@n<slot> — слот в@nсобственном инвентаре (1-8).@nДопустимые значения <lvl>: -1   0   +1
+Place a block under the robot.@nHint: use 'move_up' first.@n<slot> is the inventory slot (1..8)=Установить блок под роботом.@n<slot> — слот в@nсобственном инвентаре (1-8).
+Place a block above the robot.@n<slot> is the inventory slot (1..8)=Установить блок над роботом.@n<slot> — слот в@nсобственном инвентаре (1-8).
+Error: No free inventory space=Ошибка: Нет свободного места в инвентаре
+Dig the block in front of the robot@n<slot> is the inventory slot (1..8)@n<lvl> is one of: -1   0   +1=Извлечь блок перед роботом.@n<slot> — слот в@nсобственном инвентаре (1-8).@nДопустимые значения <lvl>: -1   0   +1
+Dig the block on the left side@n<slot> is the inventory slot (1..8)@n<lvl> is one of: -1   0   +1=Извлечь блок слева спереди.@n<slot> — слот в@nсобственном инвентаре (1-8).@nДопустимые значения <lvl>: -1   0   +1
+Dig the block on the right side@n<slot> is the inventory slot (1..8)@n<lvl> is one of: -1   0   +1=Извлечь блок справа спереди.@n<slot> — слот в@nсобственном инвентаре (1-8).@nДопустимые значения <lvl>: -1   0   +1
+Dig the block under the robot.@n<slot> is the inventory slot (1..8)=Извлечь блок под@nроботом.@n<slot> — слот в@nсобственном инвентаре (1-8).
+Dig the block above the robot.@n<slot> is the inventory slot (1..8)=Извлечь блок над@nроботом.@n<slot> — слот в@nсобственном инвентаре (1-8).
+Rotate the block in front of the robot@n<lvl> is one of:  -1   0   +1@n<steps> is one of:  1   2   3=Повернуть блок перед роботом.@nДопустимые значения <lvl>: -1   0   +1@nДопустимые значения <steps>: 1   2   3
+Bot torch=Факел робота
+
+### cmd_place.lua ###
+### cmd_soup.lua ###
+
+Error: Position protected=Ошибка: Позиция защищена
+
+### cmd_sign.lua ###
+
+Commands,Help=Команды,Помощь
+Sign name:=Имя знака:
+Cancel=Отмена
+Check=Проверить
+Help=Помощь
+Copy Cmnd=Копировать команду
+please check the added line(s)=пожалуйста, проверьте новую(ые) строку(и)
+Sign "command"=Знак "Команда"
+-- enter or copy commands from help page=-- введите или скопируйте команды со страницы помощи
+Error: Signs inventory empty=Ошибка: Инвентарь знаков пуст
+Error: Position protected or occupied=Ошибка: Позиция защищена или занята
+Place a sign in front of the robot@ntaken from the signs inventory@n<slot> is the inventory slot (1..6)=Установить знак перед роботом.@n<slot> — слот в@nсобственном инвентаре (1-6).
+Place a sign behind the robot@ntaken from the signs inventory@n<slot> is the inventory slot (1..6)=Установить знак позади робота.@n<slot> — слот в@nсобственном инвентаре (1-6).
+Error: No sign available=Ошибка: Знак недоступен
+Error: Signs inventory slot is occupied=Ошибка: Слот инвентаря знаков занят
+Error: Position is protected=Ошибка: Позиция защищена
+Dig the sign in front of the robot@nand add it to the signs inventory.@n<slot> is the inventory slot (1..6)=Извлечь знак перед роботом.@n<slot> — слот в@nсобственном инвентаре (1-6).
+Dig the sign in front of the robot@nand add the cleared sign to@nthe item iventory.@n<slot> is the inventory slot (1..8)=Извлечь знак перед роботом.@n<slot> — слот в@nсобственном инвентаре (1-6).
+Sign 'command'=Знак 'Команда'
+The 'command' sign can be programmed by the player.=Знак 'Команда' может быть запрограммирован игроком.
+Place the sign in front of you and use the node menu to program your sequence of bot commands.=Поместите знак перед собой и используйте меню знака, чтобы запрограммировать последовательность команд для робота.
+The menu has an edit field for your commands and a help page with all available commands.=Меню содержит поле ввода для ваших команд и страницу помощи со всеми доступными командами.
+
+### cmd_soup.lua ###
+
+Take water into empty bucket when standing on a shore@n(use specified slot number or 0 for auto selection)=Зачерпнуть воды пустым ведром.@nДля этого робот должен стоять у воды. (используйте номер слота@nс ведром или 0 для автоматического выбора)
+Error: No still water around=Ошибка: Нет стоячей воды поблизости
+Error: No empty bucket in inventory=Ошибка: Нет пустого ведра в инвентаре
+Error: No empty bucket in inventory slot =Ошибка: Нет пустого ведра в указанном слоте инвентаря
+Error: No inventory space for full bucket=Ошибка: Нет свободного места в инвентаре для полного ведра
+Pour water from bucket to empty cauldron in front of a robot@n(use specified slot number or 0 for auto selection)=Вылить воду из ведра в пустой котёл (xdecor) перед роботом@n(используйте номер слота с ведром или 0 для автоматического выбора)
+Error: No empty cauldron in front of a robot=Ошибка: Нет пустого котла перед роботом
+Error: No full bucket in inventory=Ошибка: Нет полного ведра в инвентаре
+Error: No full bucket in inventory slot =Ошибка: Нет полного ведра в указанном слоте инвентаря
+Error: No inventory space for empty bucket=Ошибка: Нет места в инвентаре для пустого ведра
+Set fire under cauldron (requires flammable material)@n(command is ignored when fire is already burning)=Разжечь огонь под котлом (требуется горючий материал)@n(команда игнорируется, если огонь уже горит)
+Error: No cauldron in front of a robot=Ошибка: Нет котла перед роботом
+Error: No space for fire under cauldron=Ошибка: Нет места для огня под котлом
+Error: No flammable material under cauldron=Ошибка: Нет горючего материала под котлом
+Put out (extinguish) fire under cauldron@n(command is ignored when there is no fire)=Потушить огонь под котлом@n(команда игнорируется, если огня нет)
+Take boiling soup into empty bowl from cauldron@nin front of a robot@n(use specified slot number or 0 for auto selection)=Набрать кипящий суп из котла в пустую миску.@n(используйте номер слота с миской или 0 для автоматического выбора)
+Error: No cauldron with a soup in front of a robot=Ошибка: Нет котла с супом перед роботом
+Error: No empty bowl in inventory=Ошибка: Нет пустой миски в инвентаре
+Error: No empty bowl in inventory slot =Ошибка: Нет пустой миски в указанном слоте инвентаря
+Error: No inventory space for full bowl=Ошибка: Нет места в инвентаре для миски с супом
+Sign "take water"=Знак "Зачерпнуть воды"
+Sign "cook soup"=Знак "Варить суп"
+Sign 'take water'=Знак 'Зачерпнуть воды'
+Used to take water into bucket.=Используется, чтобы зачерпнуть воды в ведро.
+Place the sign on a shore, in front of the still water pool.=Поместите знак на берегу, перед стоячим водоёмом.
+Items in slots:=Предметы в инвентаре:
+  1 - empty bucket=  1 - пустое ведро
+The result is one bucket with water in selected inventory slot.=Результат — одно ведро с водой в выбранном слоте инвентаря.
+When finished, the bot turns around.=По завершении робот разворачивается.
+Sign 'cook soup'=Знак 'Варить суп'
+Used to cook a vegetable soup in cauldron.=Используется для приготовления овощного супа в котле.
+Cauldon should be empty and located above flammable material.=Котёл должен быть пустым и находиться над горючим материалом.
+Place the sign in front of the cauldron with one field space,=Поместите знак перед котлом на расстоянии одного блока,
+to prevent wooden sign from catching fire.=чтобы деревянный знак не загорелся.
+  1 - water bucket=  2 - ведро с водой
+  2 - vegetable #1 (i.e. tomato)=  2 - овощ №1 (например, помидор)
+  3 - vegetable #2 (i.e. carrot)=  3 - овощ №2 (например, лук)
+  4 - empty bowl (from farming or xdecor mods)=  4 - Пустая миска (из мода farming или xdecor)
+The result is one bowl with vegetable soup in selected inventory slot.=Результат — одна миска с овощным супом в выбранном слоте инвентаря.
+
+### cmd_trees.lua ###
+
+Used to harvest an aspen or pine tree trunk=Используется для сбора ствола осины или сосны
+- Place the sign in front of the tree.=- Поместите знак перед деревом.
+- Place a chest to the right of the sign.=- Поместите ящик справа от знака.
+- Put a dirt stack (10 items min.) into the chest.=- Положите стак (>10) земли (dirt) в ящик.
+- Preconfigure slot 1 of the bot inventory with dirt=Предварительно настройте слот 1 инвентаря робота на землю (dirt)
+- Preconfigure slot 2 of the bot inventory with saplings=Предварительно настройте слот 2 инвентаря робота на саженец
+Sign "aspen"=Знак "Осина"
+Sign 'aspen'=Знак 'Осина'
+
+### commands.lua ###
+
+commands:=Команды:
+unknown command=неизвестная команда
+start of a 'repeat..end' block=начало блока 'repeat..end'
+end command of a 'repeat..end' block=команда конца блока 'repeat..end'
+call a subroutine (with 'return' statement)=вызов подпрограммы (с оператором 'return')
+return from a subroutine=возврат из подпрограммы
+jump to a label=переход к метке
+Move the robot 1..999 steps forward@nwithout paying attention to any signs.@nUp and down movements also become@ncounted as steps.=Двинуть робота на 1..999 шагов@nвперёд, игнорируя знаки.@nДвижения вверх и вниз также@nсчитаются за шаги.
+Walk until a sign or obstacle is@nreached. Then continue with the next command.@nWhen a sign has been reached,@nthe current program is ended@nand the bot executes the@nnew program from the sign=Идти, пока не будет достигнут@nзнак или препятствие. Затем выполнить следующую@nкоманду.@nЕсли достигнут знак, то обработать@nкоманды знака как@nподпроцесс
+Print given text as chat message.@nFor two or more words, use the '*' character@ninstead of spaces, like "Hello*world"=Вывести заданный текст как сообщение в чат.@nДля двух и более слов используйте символ '*'@nвместо пробелов, например, "Привет*мир".
+
+### compost.lua ###
+
+Put 2 leaves into the compost barrel@n<slot> is the bot inventory slot (1..8)@nwith the leaves.=Положить 2 листа в компостный барабан@n<slot> — слот в@nинвентаре робота (1..8)@nс листьями.
+Take a compost item from the barrel.@n<slot> (1..8 or 0 for the first free slot) is the bot@nslot for the compost item.=Взять блок компоста из@nкомпостного барабана. <slot> — слот в@nинвентаре робота для блока.@nЗначения для <slot>: 0..8, или 0 для первого@nсвободного слота инвентаря.
+
+### crop_sensor.lua ###
+
+Crop Sensor: Connected with=Датчик урожая: Соединён с
+Crop Sensor=Датчик урожая
+Crop Sensor: Not connected=Датчик урожая: Не соединён
+The Crop Sensor sends cyclical signals when, for example, wheat is fully grown.=Датчик урожая периодически посылает сигнал, когда, например, пшеница полностью выросла.
+The sensor range is one node/meter.=Радиус действия датчика — один блок/метр.
+The sensor has an active side (red) that must point to the crop/field.=У датчика есть активная сторона (красная), которая должна быть направлена на растение/поле.
+
+### delayer.lua ###
+
+Signal Delayer: Connected with=Задержка сигнала: Соединена с
+Delay time [sec]:=Время задержки [с]:
+Signal Delayer=Задержка сигнала
+Signals are forwarded delayed. Subsequent signals are queued.=Сигналы передаются с задержкой. Последующие сигналы ставятся в очередь.
+The delay time can be configured.=Время задержки можно настроить.
+
+### delayer.lua ###
+### timer.lua ###
+
+Start=Старт
+
+### doc.lua ###
+
+After you have placed the Signs Bot Box, you can start the bot by means of the 'On' button in the box menu.=После того как вы установили ящик робота, вы можете запустить робота с помощью кнопки "Вкл." в меню ящика.
+If the bot returns to its box right away, you will likely need to charge it with electrical energy (techage) first.=Если робот сразу возвращается в свой ящик, вероятно, его сначала нужно зарядить электрической энергией (Techage).
+The bot then runs straight up until it reaches an obstacle (a step with two or more blocks up or down or a sign.)=Затем робот идёт прямо, пока не достигнет препятствия (ступеньки с двумя или более блоками вверх/вниз или знак).
+If the bot first reaches a sign it will execute the commands on the sign.=Если робот сначала достигнет знака, он выполнит команды на этом знаке.
+If the command(s) on the sign is e.g. 'turn_around', the bot turns and goes back.=Если команда на знаке, например, 'turn_around', робот разворачивается и идёт обратно.
+In this case, the bot reaches his box again and turns off.=В этом случае робот снова достигает своего ящика и выключается.
+The Signs Bot Box has an inventory with 6 stacks for signs and 8 stacks for other items (to be placed/dug by the bot).=Ящик робота имеет инвентарь на 6 стаков знаков и 8 стаков для прочих предметов (которые можно устанавливать/извлекать).
+This inventory simulates the bot internal inventory.=Инвентарь ящика имитирует внутренний инвентарь робота.
+That means you will only have access to the inventory if the bot is turned off ('sitting' in his box).=Это означает, что у вас будет доступ к инвентарю только если робот выключен ('сидит' в своём ящике).
+You simply control the direction of the bot by means of the 'turn left' and 'turn right' signs (signs with the arrow).=Вы можете просто управлять направлением робота с помощью знаков 'turn_left' (повернуть налево) или 'turn_right' (повернуть направо).
+The bot can run over steps (one block up/down). But there are also commands to move the bot up and down.=Робот может преодолевать ступеньки (один блок вверх/вниз). Но также есть команды для движения робота вверх и вниз.
+It is not necessary to mark a way back to the box.=Не обязательно отмечать путь обратно к ящику.
+With the command 'turn_off' the bot will turn off and be back in his box from every position.=По команде "turn_off" робот выключится и окажется обратно в своём ящике из любого места.
+The same applies if you turn off the bot by the box menu.=То же самое происходит, если вы выключите робота через меню ящика.
+If the bot reaches a sign from the wrong direction (from back or sides) the sign will be ignored.=Если робот достигает знака с неправильного направления (сбоку или сзади), знак будет проигнорирован.
+The bot will walk over.=Робот просто пройдёт дальше.
+All predefined signs have a menu with a list of the bot commands.=Все предопределённые знаки имеют меню со списком команд робота.
+These signs can't be changed, but you can craft and program your own signs.=Эти знаки нельзя изменить, но вы можете создавать и программировать собственные знаки.
+For this you have to use the 'command' sign.=Для этого вы можете использовать знак 'command'.
+This sign has an edit field for your commands and a help page with all available commands.=Этот знак содержит поле ввода для ваших команд и страницу помощи со всеми доступными командами.
+Also for your own signs it is important to know:=Также для собственных знаков важно знать:
+After the execution of the last command of the sign, the bot falls back into its default behaviour and runs in its taken direction.=После выполнения последней команды знака робот всегда возвращается к своему поведению по умолчанию и продолжает движение в выбранном направлении.
+A standard job for the bot is to move items from one chest to another=Стандартная задача для робота — перемещать предметы из одного ящика в другой
+(chest or node with a chest like inventory).=(ящик или блок с инвентарём, подобным ящику).
+This can be done by means of the two signs 'take item' and 'add item'.=Это можно реализовать с помощью двух знаков: 'take_item' и 'add_item'.
+These signs have to be placed on top of chest nodes.=Эти знаки должны быть размещены на ящиках.
+In addition to the signs the bot can be controlled by means of sensors.=В дополнение к знакам роботом можно управлять с помощью датчиков.
+Sensors like the Bot Sensor have two states: on and off.=Датчики, такие как датчик робота, имеют два состояния: 'on' (вкл.) и 'off' (выкл.).
+If the Bot Sensor detects a bot it will switch to the state 'on' and=Если датчик робота обнаруживает робота, он переходит в состояние 'on' и
+sends a signal to a connected block, called an actuator.=посылает сигнал на подключённый блок, называемый актуатором.
+Sensors are:=Датчики:
+- Bot Sensor: Sends a signal when the robot passes by=- Датчик робота: Посылает сигнал, когда робот проходит мимо
+- Node Sensor: Sends a signal when it detects any node=- Датчик блока: Посылает сигнал при изменении блоков перед собой
+- Crop Sensor: Sends a signal when, for example wheat is fully grown=- Датчик урожая: Посылает сигнал, когда, например, пшеница полностью выросла
+- Bot Chest: Sends a signal depending on the chest state (empty, full)=- Ящик робота: Посылает сигнал в зависимости от состояния ящика (полный, пустой)
+Actuators are:=Актуаторы:
+- Signs Bot Box: Can turn the bot off and on=- Ящик робота: Может включать и выключать робота
+- Control Unit: Can be used to exchange the sign to lead the bot=- Блок управления: Используется для замены знака и тем самым управления роботом
+Additional sensors and actuator can be added by other mods.=Дополнительные датчики и актуаторы могут быть добавлены другими модами.
+To send a signal from a sensor to an actuator, the sensor has to be connected (paired) with actuator.=Чтобы послать сигнал от датчика к актуатору, датчик должен быть соединён (спарен) с актуатором.
+To connect sensor and actuator, the Sensor Connection Tool has to be used.=Инструмент соединения датчиков используется для подключения датчиков к актуаторам.
+Simply click with the tool on both blocks and the sensor will be connected with the actuator.=Просто кликните инструментом по обоим блокам, и датчик соединится с актуатором.
+A successful connection is indicated by a ping/pong noise.=Об успешном соединении сигнализирует звук пинг-понг.
+Before you connect sensor with actuator, take care that the actuator is in the requested state.=Прежде чем соединять датчик с актуатором, убедитесь, что актуатор находится в нужном состоянии.
+For example: If you want to start the Bot with a sensor, connect the sensor with the Bot Box,=Например: Если вы хотите запустить робота с помощью датчика, соедините датчик с ящиком робота,
+when the Bot is in the state 'on'. Otherwise the sensor signal will stop the Bot,=только когда робот включён (в состоянии 'on'). Иначе сигнал датчика выключит робота,
+instead of starting it.=вместо того чтобы запустить его.
+The following applies to all commands that are used to place items in the bot inventory, like:=Следующее относится ко всем командам, используемым для помещения предметов в инвентарь робота, таким как:
+- take_item <num> <slot>=- take_item <num> <slot>
+- pickup_items <slot>=- pickup_items <slot>
+- trash_sign <slot>=- trash_sign <slot>
+- harvest <slot>=- harvest <slot>
+- dig_front <slot> <lvl>=- dig_front <slot> <lvl>
+- dig_left <slot> <lvl>=- dig_left <slot> <lvl>
+- dig_right <slot> <lvl>=- dig_right <slot> <lvl>
+- dig_below <slot> <lvl>=- dig_below <slot> <lvl>
+- dig_above <slot> <lvl>=- dig_above <slot> <lvl>
+If no slot or slot 0 was specified with the command (case A), all 8 slots of the bot inventory =Если в команде не указан слот или указан слот 0 (случай А), последовательно проверяются все
+are checked one after the other. If a slot was specified (case B), only this slot is checked.=8 слотов инвентаря робота. Если слот указан (случай Б), проверяется только он.
+In both cases the following applies: If the slot is preconfigured and fits the item, =В обоих случаях действует следующее: если слот предварительно настроен и предмет подходит, или если слот
+or if the slot is not configured and empty, or is only partially filled with the item type =не настроен и пуст, или частично заполнен типом предмета
+(which should be added), then the items are added.=(который нужно добавить), то предметы добавляются.
+If not all items can be added, the remaining slots will be tried out in case A.=Если нельзя добавить все предметы, в случае А будут опробованы оставшиеся слоты.
+Anything that could not be added to your own inventory goes back.=Что не может быть добавлено в собственный инвентарь, возвращается обратно.
+The following applies to all commands that are used to take items from the bot inventory, like:=Следующее относится ко всем командам, используемым для извлечения предметов из инвентаря робота, таким как:
+- add_item <num> <slot>=- add_item <num> <slot>
+It doesn't matter whether a slot is configured or not. The bot takes the first stack that =Здесь неважно, настроен ли слот. Робот берёт первый стак, который
+it can find from its own inventory and tries to use it.=может найти в собственном инвентаре, и пытается его использовать.
+If a slot is specified, it only takes this, if no slot has been specified, it checks all of =Если слот указан, он берёт только из него. Если слот не указан, он проверяет все
+them one after the other, starting from slot 1 until it finds something.=последовательно, начиная со слота 1, пока не найдёт что-нибудь.
+If the number found is smaller than requested, he tries to take the rest out of any slot.=Если найденное количество меньше требуемого, он пытается взять остальное из любого слота.
+Signs Bot=Signs Bot
+A robot controlled by signs, used for automated work=Робот, управляемый знаками, для автоматизации задач
+Start the Bot=Запуск робота
+Control the Bot=Управление роботом
+Sensors and Actuators=Датчики и актуаторы
+Connecting sensors and actuator=Соединение датчика с актуатором
+Bot inventory behavior=Поведение инвентаря робота
+
+### doc.lua ###
+### cmd_sign.lua ###
+
+The help page has a copy button to simplify the programming.=На странице помощи есть кнопка копирования для упрощения программирования.
+
+### duplicator.lua ###
+
+Template:=Шаблон:
+Input:=Ввод:
+Output:=Вывод:
+1. Place one 'cmnd' sign= 1. Поместить знак 'команда'
+2. Add 'blank signs'=2. Добавить 'пустые знаки'
+3. Take the copies=3. Забрать копии
+Signs Duplicator=Дубликатор знаков
+Sign "user"=Знак "Пользователь"
+Sign "blank"="Пустой" знак
+The Duplicator can be used to make copies of signs.=Дубликатор знаков может использоваться для создания копий знаков.
+1. Put one 'cmnd' sign to be used as template into the 'Template' inventory=1. Поместите один знак 'команда' в качестве шаблона в инвентарь 'Шаблон'
+2. Add one or several 'blank signs' to the 'Input' inventory.=2. Добавьте один или несколько 'пустых знаков' в инвентарь 'Ввод'.
+3. Take the copies from the 'Output' inventory.=3. Заберите копии из инвентаря 'Вывод'.
+Written books [default:book_written] can alternatively be used as template=Альтернативно, в качестве шаблона можно использовать написанные книги [default:book_written]
+Already written signs can be used as input, too.=Уже написанные знаки также можно использовать в качестве входных.
+Needed as input for the Duplicator.=Требуется как вход для дубликатора знаков.
+
+### extender.lua ###
+
+Sensor Extender: Connected with=Расширитель датчика: Соединён с
+Sensor Extender=Расширитель датчика
+Sensor Extender: Not connected=Расширитель датчика: Не соединён
+With the Sensor Extender, sensor signals can be sent to more than one actuator.=С помощью расширителя датчика можно подключить к датчику дополнительные актуаторы.
+Place one or more extender nearby the sensor and connect each extender=Поместите один или несколько расширителей датчика рядом с датчиком и соедините каждый
+with one further actuator by means of the Connection Tool.=с другим актуатором с помощью инструмента соединения.
+
+### interpreter.lua ###
+
+Maximum programm size exceeded=Превышен максимальный размер программы
+Too many parameters=Слишком много параметров
+Parameter error=Ошибка параметра
+Command error=Ошибка команды
+'repeat' missing=Отсутствует 'repeat'
+'end' missing=Отсутствует 'end'
+Checked and approved=Проверено и одобрено
+
+### logic_and.lua ###
+
+Signal AND with=Логическое И с
+inputs=входами
+Signal AND=Логическое И
+Signal is sent, if all input signals are received.=Сигнал отправляется, если получены все входные сигналы.
+
+### node_sensor.lua ###
+
+Node Sensor: Connected with =Датчик блока: Соединён с
+added=появились
+removed=исчезли
+added or removed=появились или исчезли
+Send signal if nodes have been:=Послать сигнал, если блоки:
+accept=принять
+Node Sensor=Датчик блока
+Node Sensor: Not connected=Датчик блока: Не соединён
+The node sensor sends cyclical signals when it detects that nodes have appeared or disappeared,=Датчик блока периодически посылает сигнал, когда обнаруживает изменение блоков перед собой (блок появился или исчез),
+but has to be configured accordingly.=но должен быть соответствующим образом настроен.
+Valid nodes are all kind of blocks and plants.=Действительными являются все виды блоков или растений.
+The sensor range is 3 nodes/meters in one direction.=Радиус действия датчика — 3 блока/метра в одном направлении.
+The sensor has an active side (red) that must point to the observed area.=У датчика есть активная сторона (красная), которая должна быть направлена на наблюдаемую область.
+
+### signs.lua ###
+
+Instructions:=Инструкции:
+Code=Код
+Sign "turn right"=Знак "Повернуть направо"
+Sign "turn left"=Знак "Повернуть налево"
+Sign "take item"=Знак "Взять предмет"
+Sign "add item"=Знак "Положить предмет"
+Sign "stop"=Знак "Стоп"
+Sign "add to cart"=Знак "Положить в вагонетку"
+Sign "take from cart"=Знак "Взять из вагонетки"
+The Bot turns right when it detects this sign in front of it.=Робот поворачивает направо, когда обнаруживает перед собой этот знак.
+The Bot turns left when it detects this sign in front of it.=Робот поворачивает налево, когда обнаруживает перед собой этот знак.
+The Bot takes items out of a chest in front of it and then turns around.=Робот берёт предметы из ящика перед собой и затем разворачивается.
+This sign has to be placed on top of the chest.=Этот знак должен быть размещён на ящике.
+The Bot puts items into a chest in front of it and then turns around.=Робот кладёт предметы в ящик перед собой и затем разворачивается.
+The Bot will stop in front of this sign until the sign is removed or the bot is turned off.=Робот остановится перед этим знаком, пока знак не будет удалён или робот не будет выключен.
+The Bot puts items into a minecart in front of it, pushes the cart and then turns around.=Робот кладёт предметы в вагонетку перед собой, запускает вагонетку и затем разворачивается.
+This sign has to be placed on top of the rail at the cart end position.=Этот знак должен быть размещён на рельсах, т.е. над вагонеткой.
+The Bot takes items out of a minecart in front of it, pushes the cart and then turns around.=Робот берёт предметы из вагонетки перед собой, запускает вагонетку и затем разворачивается.
+
+### techage.lua ###
+
+no power=нет питания
+Ignite the techage charcoal lighter=Зажечь растопку для древесного угля
+Turns the bot off if the@nbattery power is below the@ngiven value in percent (1..99)=Выключить робота,@nесли заряд батареи меньше@nуказанного значения@nв процентах (1..99)
+Jump to <label> if the@nbattery power is below the@ngiven value in percent (1..99)=Перейти к <label>, если@nзаряд батареи ниже@nуказанного значения в процентах (1..99)
+fully charged=полностью заряжен
+Sends a techage command@nto a given node.@nReceiver is addressed by@nthe techage node number.@nFor commands with two or more@nwords, use the '*' character@ninstead of spaces, e.g.:@nsend_cmnd 3465 pull*default:dirt*2=Послать команду Techage@nблоку с указанным@nномером.@nДля команд с двумя или более@nсловами используйте символ '*'@nвместо пробела, например:@nsend_cmnd 3465 pull*default:dirt*2
+
+### timer.lua ###
+
+Bot Timer=Таймер робота
+Cycle time [min]:=Время цикла [мин]:
+Bot Timer: Not connected=Таймер робота: Не соединён
+Special kind of sensor.=Особая форма датчика.
+Can be programmed with a time in seconds, e.g. to start the bot cyclically.=Может быть запрограммирован временем в секундах, например, для циклического запуска робота.
+
+### timer.lua ###
+### logic_and.lua ###
+
+Connected with=Соединён с
+
+### tool.lua ###
+
+Sensor Connection Tool=Инструмент соединения датчиков
