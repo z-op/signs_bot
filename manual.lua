@@ -21,6 +21,11 @@ if minetest.global_exists("techage") then
 	doclib.add_to_manual("techage", "EN", content)
 	local content = dofile(MP.."/manual_DE.lua")
 	doclib.add_to_manual("techage", "DE", content)
+	-- English content as fallback for other languages
+	for _, lang in ipairs({"FR", "RU", "ES", "pt-BR"}) do
+		local content = dofile(MP.."/manual_EN.lua")
+		doclib.add_to_manual("techage", lang, content)
+	end
 
 elseif minetest.global_exists("doclib") then
 
